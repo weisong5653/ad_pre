@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="image.dao.ImgDao">
+    <select id="queryimgpath" resultType="String">
+        select imgpath from img where imgid=#{imgid}
+    </select>
+    <select id="queryAll" resultType="Image">
+        select * from img
+    </select>
+    <insert id="createimg" >
+        insert into img(imgpath,imgtitle,imgissuer) values (#{imgpath},#{imgtitle},#{imgissuer})
+    </insert>
+    <select id="queryimage" resultType="Image">
+        select imgid,imgpath,imgtitle,imgissuer
+        from img
+        where imgid=#{imgid}
+    </select>
+</mapper>
