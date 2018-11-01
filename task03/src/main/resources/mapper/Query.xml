@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.Query">
+    <select id="queryAllStudents" resultType="Student">
+        select t_student.name,t_student.studentId
+        from t_teachers,t_teach,t_students_attend_class,t_student
+        where t_teach.teacherId = t_teachers.teacherId and t_teachers.teacherName=#{teacherName}
+        and t_teach.classId=t_students_attend_class.classId and t_students_attend_class.studentId=t_student.studentId
+    </select>
+    <select id="queryTeacher" resultType="Teacher">
+        select className,teacherName
+        from t_teachers,t_teach,t_classes
+        where t_teachers.teacherName=#{teacherName} and t_teachers.teacherId=t_teach.teacherId and t_teach.classId=t_classes.classId
+    </select>
+    <select id="queryEvaluations" resultType="Evaluation">
+          select scores,maxScores,content,subject
+          from t_evaluation_template_simple
+    </select>
+    <select id="queryTeach" resultType="Teach">
+        select teacherId,classId
+        from t_teach
+        where teacherId=#{teacherId}
+    </select>
+
+    <select id="queryStudent" resultType="Student">
+        select name,studentId
+        from t_student
+        where name =#{name}
+    </select>
+    <select id="queryEvaluation" resultType="Evaluation">
+        select scores,maxScores,content,subject
+        from  t_evaluation_template_simple
+        where content=#{content} and subject=#{subject}
+    </select>
+
+    <select id="queryTeacherEvaluation" resultType="TeacherEvaluationRecords">
+        select teacherId,studentId,content, subject,score,contentId,time,classId
+        from t_teacher_evaluation_simple
+    </select>
+</mapper>

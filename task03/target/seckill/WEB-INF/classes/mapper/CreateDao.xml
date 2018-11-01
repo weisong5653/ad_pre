@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.CreateDao">
+    <!--<update id="createPropertyOfStudent">-->
+        <!--update t_property_simple-->
+        <!--set property=property+#{property}-->
+        <!--where userId=#{userId}-->
+    <!--</update>-->
+    <!--<update id="createIntegraOfStudent">-->
+        <!--update t_Integral_simple-->
+        <!--set integral=integral+#{integral}-->
+        <!--where userId=#{userId}-->
+    <!--</update>-->
+    <insert id="createIntegraOfStudent">
+        insert into t_Integral_simple (userId, integral) values (#{userId}, #{integral})
+        ON DUPLICATE KEY UPDATE integral = integral+#{integral};
+    </insert>
+    <insert id="createPropertyOfStudent">
+        insert into t_property_simple (userId, property) values (#{userId}, #{property})
+        ON DUPLICATE KEY UPDATE property = property+#{property};
+    </insert>
+
+</mapper>

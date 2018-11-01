@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.TeacherEvaluationDao">
+    <!---->
+    <insert id="createTeacherEvaluation" parameterType="TeacherEvaluation">
+        insert into t_teacher_evaluation_simple  values
+        (#{teacherEvaluationRecords.teacherId},
+        #{teacherEvaluationRecords.studentId},
+        #{teacherEvaluationRecords.content},
+        #{teacherEvaluationRecords.subject},
+        #{teacherEvaluationRecords.score},
+        #{teacherEvaluationRecords.contentId},
+        #{teacherEvaluationRecords.time},
+        #{teacherEvaluationRecords.classId}
+        )
+    </insert>
+</mapper>
