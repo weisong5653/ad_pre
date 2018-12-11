@@ -17,17 +17,17 @@ public class ResponseUtil {
      * @param response
      * @return
      */
-    public static PrintWriter OutputData(HttpServletResponse response, JSONObject data){
-        response.setContentType("text/plain; charset=utf-8");
+    public static void OutputData(HttpServletResponse response, JSONObject data){
+        response.setContentType("application/json; charset=utf-8");
         PrintWriter out= null;
         try {
             out = response.getWriter();
             out.print(data.toString());
+            System.out.println(data.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
         out.flush();
         out.close();
-        return out;
     }
 }

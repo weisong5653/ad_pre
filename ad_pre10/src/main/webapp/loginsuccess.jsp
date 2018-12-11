@@ -21,14 +21,21 @@
     </style>
     <script type="text/javascript">
         $(function () {
+            var token = window.localStorage.getItem("token");
+            console.log(token);
             //请求论文数据
             $.ajax({
                 type:"post",
                 url:"/LoginSuccessController",
                 dataType:"json",
+                beforeSend:function (request) {
+                    request.setRequestHeader("Authorization",token);
+                    console.count(token);
+                },
                 success:function (data) {
                     var student = data.student;
                     listThesis = data.listThesis;
+                    // alert(JSON.stringify(data));
                     var studentName  = student.studentName;
                     $("#studentName").attr("value",studentName);
                     for (var i = 0;i < listThesis.length;i++) {
@@ -39,8 +46,8 @@
                     // $("#studentName").text(data[studentName]);
                 },
                 error:function (data) {
-                    alert(data["student"]);
-                    alert("拉取数据失败");
+                    console.debug(data["student"]);
+                    alert("拉取数据失败,您没有权限查看数据");
                 }
             });
 
@@ -149,6 +156,13 @@
             $("#modificationPersonalButton").click(function () {
                 window.location.href = "Personal.jsp";
             })
+
+            //获取url中的数据
+            function getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                if (r != null) return unescape(r[2]); return null; //返回参数值
+            }
 
         })
     </script>

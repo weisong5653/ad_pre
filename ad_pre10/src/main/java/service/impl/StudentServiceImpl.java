@@ -1,10 +1,13 @@
 package service.impl;
 
 import dao.StudentDao;
+import dao.cache.TokenCache;
 import dao.impl.StudentDaoImpl;
 import dto.LoginDto;
+import dto.UserTokenDto;
 import entity.Student;
 import enums.LoginState;
+import exception.StudentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.StudentService;
@@ -19,7 +22,7 @@ import java.util.Map;
 public class StudentServiceImpl implements StudentService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     StudentDao studentDao;
-
+    TokenCache tokenCache;
     @Override
     public int insertStudent(Student student) {
         studentDao = new StudentDaoImpl();
@@ -69,4 +72,28 @@ public class StudentServiceImpl implements StudentService {
         }
     }
 
+    @Override
+    public UserTokenDto setStudentToken(String studentId) {
+        tokenCache = new TokenCache();
+        UserTokenDto userTokenDto = null;
+        if (studentId != null) {
+            userTokenDto = tokenCache.setUserTokenDto(studentId);
+        } else {
+            throw new StudentException("设置token时，studentId为null");
+        }
+        return userTokenDto;
+    }
+
+    @Override
+    public UserTokenDto verifyUserToken(String token) {
+        tokenCache = new TokenCache();
+        UserTokenDto userTokenDto = null;
+        userTokenDto = tokenCache.verifyUserToken(token);
+        if (userTokenDto != null) {
+            logger.debug("token有效"+token);
+        } else {
+            logger.debug("token无效"+token);
+        }
+        return userTokenDto;
+    }
 }

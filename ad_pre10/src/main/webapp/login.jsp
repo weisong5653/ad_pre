@@ -14,8 +14,9 @@
             $("#loginButton").click(function () {
                 var studentName = $("#studentName").val();
                 var password = $("#password").val();
+                var studentId = "11";
                 //这里的list是一个JSON对象
-                list = {studentName:studentName,password:password};
+                list = {studentName:studentName,password:password,studentId:studentId};
                 $.ajax({
                     type:"post",
                     url:"/LoginController",
@@ -30,9 +31,11 @@
                         // result = JSON.parse(loginState);
                         // alert(loginState+"     "+result);
 
-                        var loginState = res["isLoginSuccess"];
+                        var loginState = res.isLoginSuccess;
                         if (loginState == "true") {
                             window.location.href = "loginsuccess.jsp";
+                            window.localStorage.setItem("token",res.token);
+                            console.log(window.localStorage.getItem("token"))
                         } else {
                             alert("请检查用户名或密码是否正确");
                         }

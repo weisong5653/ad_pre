@@ -1,6 +1,7 @@
 package service;
 
 import dto.LoginDto;
+import dto.UserTokenDto;
 import entity.Student;
 import enums.LoginState;
 
@@ -29,4 +30,8 @@ public interface StudentService {
     void updateStudent(Student student);
 
     void delStudent(Student student);
+
+    UserTokenDto setStudentToken(String studentId);
+
+    UserTokenDto verifyUserToken(String token);
 }

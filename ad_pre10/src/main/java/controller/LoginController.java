@@ -1,6 +1,8 @@
 package controller;
 
+import dao.cache.TokenCache;
 import dto.LoginDto;
+import dto.UserTokenDto;
 import entity.Student;
 import enums.LoginState;
 import jdk.nashorn.internal.scripts.JS;
@@ -37,17 +39,21 @@ public class LoginController extends HttpServlet {
         studentService = new StudentServiceImpl();
         LoginDto loginDto = AutoFillBeanUtil.fillBean(request,LoginDto.class);
         HttpSession session = request.getSession();
+        String studentId = request.getParameter("studentId");
+        UserTokenDto userTokenDto;
 //        result存了状态和student
         Map<String, Object> result = studentService.getStuedntByNameAndPassWord(loginDto);
         permission = new JSONObject();
         if(((LoginState)result.get("loginState")).getState()){
+            userTokenDto = studentService.setStudentToken(studentId);
             permission.put("isLoginSuccess","true");
+            permission.put("token",userTokenDto.getToken());
             session.setAttribute("student",result.get("student"));
+            System.out.println(userTokenDto);
         } else {
             permission.put("isLoginSuccess","failure");
         }
         ResponseUtil.OutputData(response,permission);
-
     }
 
 //    /**

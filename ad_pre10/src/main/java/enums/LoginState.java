@@ -6,7 +6,9 @@ package enums;
  */
 public enum LoginState {
     LOGIN_SUCCESS(true,"登陆成功"),
-    LOGIN_FAILURE(false,"登陆失败");
+    LOGIN_FAILURE(false,"登陆失败"),
+    UNAUTHORIZED(false, "没有权限");
+
     private boolean state;
     private String stateMessage;
 
@@ -29,5 +31,13 @@ public enum LoginState {
 
     public void setStateMessage(String stateMessage) {
         this.stateMessage = stateMessage;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginState{" +
+                "state=" + state +
+                ", stateMessage='" + stateMessage + '\'' +
+                '}';
     }
 }
